@@ -39,6 +39,7 @@ router.get("/:id", async (req, res) => {
 });
 
 // create new product
+//!!!!! are those the lines from below (product.create) -- combine them?
 router.post("/", (req, res) => {
   /* req.body should look like this...
     {
@@ -112,8 +113,26 @@ router.put("/:id", (req, res) => {
     });
 });
 
-router.delete("/:id", (req, res) => {
+router.delete("/:id", async (req, res) => {
   // delete one product by its `id` value
+  try {
+    const deletedID = await Product.destroy({
+      where: {
+        id: req.params.id,
+      },
+    });
+
+    if (!deletedID) {
+      res
+        .status(404)
+        .json({ message: "Sorry, we cannot find a product with this ID." });
+      return;
+    }
+
+    res.status(200).json(deletedID);
+  } catch (error) {
+    res.status(500).json(err);
+  }
 });
 
 module.exports = router;
