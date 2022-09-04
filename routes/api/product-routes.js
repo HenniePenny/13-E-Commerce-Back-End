@@ -33,13 +33,13 @@ router.get("/:id", async (req, res) => {
         .json({ message: "Sorry, we cannot find a product with that ID." });
       return;
     }
+    res.status(200).json(productByID);
   } catch (error) {
     res.status(500).json(err);
   }
 });
 
 // create new product
-//!!!!! are those the lines from below (product.create) -- combine them?
 router.post("/", (req, res) => {
   /* req.body should look like this...
     {

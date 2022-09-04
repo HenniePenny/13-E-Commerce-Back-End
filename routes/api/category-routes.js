@@ -55,14 +55,13 @@ router.put("/:id", async (req, res) => {
         id: req.params.id,
       },
     });
-    //!!!what does the [0] do here?
     if (!updatedCategory[0]) {
       res
         .status(404)
         .json({ message: "Sorry, we cannot find a category with that ID." });
       return;
     }
-    res.status(200).json(userData);
+    res.status(200).json(updatedCategory);
   } catch (error) {
     res.status(500).json(err);
   }
